@@ -72,11 +72,17 @@ def listener(tries):
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
         print("Try again")
-        listener(tries+1)
+        if tries > 3:
+            listen_for_keyword()
+        else:
+            listener(tries+1)
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
         print("Try again")
-        listener(tries+1)
+        if tries > 3:
+            listen_for_keyword()
+        else:
+            listener(tries+1)
 
 ### Function that controls all the commands
 def commands(input):
@@ -112,6 +118,20 @@ def commands(input):
         os.remove(randfile)
         sleep()
 
+    elif input == 'open atom' or input == 'open atom text editor' or input == 'open atom editor' or input == 'open text editor':
+        print("You: ", input)
+        print("Friday: Opening atom")
+        tts = gTTS(text="Opening Atom", lang='en')
+        tts.save(randfile)
+        audio = MP3(randfile)
+        length=audio.info.length
+        clip = mp3play.load(randfile)
+        clip.play()
+        os.startfile("C:\\Users\\Arnav\\AppData\\Local\\atom\\atom.exe")
+        time.sleep(length)
+        clip.stop()
+        os.remove(randfile)
+
     else:
         tts = gTTS(text="Sorry i didn't understand what you said!", lang='en')
         tts.save(randfile)
@@ -122,7 +142,7 @@ def commands(input):
         time.sleep(length)
         clip.stop()
         os.remove(randfile)
-    listen_for_keyword()
+        listen_for_keyword()
 
 ### The main function
 def main():
