@@ -132,6 +132,20 @@ def commands(input):
         clip.stop()
         os.remove(randfile)
 
+    elif input == 'goodbye' or input == 'goodbye friday' or input == 'bye bye' or input == 'bye friday':
+        print("You: ", input)
+        print("Friday: Goodbye Sir!")
+        tts = gTTS(text="Goodbye Sir!", lang='en')
+        tts.save(randfile)
+        audio = MP3(randfile)
+        length=audio.info.length
+        clip = mp3play.load(randfile)
+        clip.play()
+        time.sleep(length)
+        clip.stop()
+        os.remove(randfile)
+        exit()
+
     else:
         tts = gTTS(text="Sorry i didn't understand what you said!", lang='en')
         tts.save(randfile)
