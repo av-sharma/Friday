@@ -4,6 +4,8 @@ import mp3play
 from mutagen.mp3 import MP3
 import sys
 import os
+import random
+import time
 
 name = "friday"     # write name in lowercase
 
@@ -78,29 +80,48 @@ def listener(tries):
 
 ### Function that controls all the commands
 def commands(input):
+    r1 = random.randint(1,10000000)
+    r2 = random.randint(1,10000000)
+    randfile = "audio\\" + str(r2) + "" + str(r1) + ".mp3"
+
     if input == 'hello':
         print("You: ", input)
         print("Friday: Hello Sir! How may i help you?")
         tts = gTTS(text="Hello Sir! How may i help you?", lang='en')
-        tts.save("audio\output.mp3")
-        clip = mp3play.load(r"audio\output.mp3")
+        tts.save(randfile)
+        audio = MP3(randfile)
+        length=audio.info.length
+        clip = mp3play.load(randfile)
         clip.play()
-        # listener(0)
+        time.sleep(length)
+        clip.stop()
+        os.remove(randfile)
+        listener(0)
 
     elif input == 'sleep' or input == 'goto sleep' or input == 'go to sleep' or input == 'stop listening':
         print("You: ", input)
         print("Friday: Going to Sleep!")
         tts = gTTS(text="Going to Sleep!", lang='en')
-        tts.save("audio\output.mp3")
-        clip = mp3play.load(r"audio\output.mp3")
+        tts.save(randfile)
+        audio = MP3(randfile)
+        length=audio.info.length
+        clip = mp3play.load(randfile)
         clip.play()
+        time.sleep(length)
+        clip.stop()
+        os.remove(randfile)
         sleep()
 
     else:
         tts = gTTS(text="Sorry i didn't understand what you said!", lang='en')
-        tts.save("audio\output.mp3")
-        clip = mp3play.load(r"audio\output.mp3")
+        tts.save(randfile)
+        audio = MP3(randfile)
+        length=audio.info.length
+        clip = mp3play.load(randfile)
         clip.play()
+        time.sleep(length)
+        clip.stop()
+        os.remove(randfile)
     listen_for_keyword()
 
 ### The main function
