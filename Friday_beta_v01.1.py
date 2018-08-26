@@ -41,12 +41,20 @@ def sleep():
         print(text)
         input = list(text.split(' '))
         if text.lower() == 'wake up friday':
+            r1 = random.randint(1,10000000)
+            r2 = random.randint(1,10000000)
+            randfile = "audio\\" + str(r2) + "" + str(r1) + ".mp3"
             print("You: ", input)
             print("Friday: Awake!")
             tts = gTTS(text="I\'m now Listening!", lang='en')
-            tts.save("audio\sleep.mp3")
-            clip = mp3play.load(r"audio\sleep.mp3")
+            tts.save(randfile)
+            audio = MP3(randfile)
+            length=audio.info.length
+            clip = mp3play.load(randfile)
             clip.play()
+            time.sleep(length)
+            clip.stop()
+            os.remove(randfile)
             listener(0)
     except sr.UnknownValueError:
         # print("Google Speech Recognition could not understand audio")
